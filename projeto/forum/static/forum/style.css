@@ -1,0 +1,114 @@
+p {
+    color: black;
+}
+
+* {
+    font-family: Arial, serif;
+}
+
+body {
+    background-color: #dcdcdc;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1em;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+article {
+    margin: auto;
+    width: 50%;
+}
+
+th, td {
+    padding: 10px;
+}
+
+form {
+    align-self: center;
+}
+
+table.center {
+    margin: auto;
+}
+
+fieldset {
+    margin: auto;
+    width: 15%;
+}
+
+button {
+    border: 1px solid black;
+    border-radius: 6px;
+    color: black;
+    padding: 10px 10px;
+    cursor: pointer;
+}
+
+.voltar {
+    background-color: #c7c7c7;
+}
+
+li {
+    text-align: left;
+}
+
+.foto_perfil {
+    border: 1px solid black;
+    height: 50px;
+    width: auto;
+}
+
+.foto_perfil_info {
+    border: 1px solid black;
+    height: 200px;
+    width: auto;
+}
+
+.caixinha {
+    border: 5px solid #000000;
+    background-color: lightgrey;
+    width: 700px;
+    padding: 25px;
+    margin: 20px;
+}
+
+.caixinha_sub {
+    border: 5px solid #000000;
+    background-color: lightgrey;
+    width: 500px;
+    padding: 25px;
+    margin: 20px;
+}
+.titulo{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.top {
+    margin-left: 60px;
+    margin-top: 15px;
+}
+
+.parent {
+    padding: 1rem;
+}
+
+.inline-block-child {
+  display: inline-block;
+
+}
+
+aside {
+    background-color: rgb(164, 164, 164);
+    float: right;
+}

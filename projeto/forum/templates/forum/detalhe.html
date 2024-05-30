@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+{% extends "forum/index.html" %}
+{% load static %}
+{% block header %}
+<header>
+    <a href="http://127.0.0.1:8000/forum/">
+        <img src="{% static 'forum/images/header1.jpg' %}" alt="CondutorForum" width="100%" height="auto">
+    </a>
+</header>
+{% endblock %}
+
+{% block sidebar %}
+<aside>
+    <div class="parent">
+        {% if request.user.is_authenticated %}
+        <div class="inline-block-child">
+            <img class="foto_perfil" src="{% static user.condutor.avatar %}" alt="Foto de perfil"/>
+        </div>
+        <div class="inline-block-child">
+            <a href="{% url 'forum:info' %}">
+                <p>{{ request.user.username }}</p>
+            </a>
+            <a href="{% url 'forum:logout' %}">Logout</a>
+            {% else %}
+            <a href="{% url 'forum:fazerLogin' %}">Login</a>
+            <a href="{% url 'forum:signin' %}">Criar conta</a>
+            {% endif %}
+        </div>
+    </div>
+</aside>
+{% endblock %}
+
+{% block conteudo %}
+<h1>{{ post.post_titulo }} - {{ post.pub_data.date }}</h1>
+
+{% if post.imagem.url is not None %}
+<img src="{{ post.imagem.url }}"
+     alt="{{ post.post_titulo }}"
+     style="width: 30%"/>
+{% endif %}
+<p>{{ post.post_texto }}</p>
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <button type="submit" formaction="{% url 'forum:gosto_post' post.id %}">👍 - {{ post.gostos }}</button>
+        {% if request.user.is_superuser %}
+        <button type="submit" formaction="{% url 'forum:removerpost' post.id %}">Remover post</button>
+        {% endif %}
+        <p><label for="comentario">Comentar:</label>
+            <input name="comentario" id="comentario" type="text"></p>
+        <button type="submit" formaction="{% url 'forum:criarcomentario' post.id %}">Postar comentário</button>
+        <button class="voltar" type="submit" formaction="{% url 'forum:index' %}">Voltar</button>
+    </div>
+
+    <div class="caixinha">
+        <ul>
+
+            {% csrf_token %}
+            {% for comentario in post.comentario_set.all %}
+            <li>{{ comentario.comentario_texto }}
+                <button type="submit" formaction="{% url 'forum:gosto_comentario' comentario.id %}">
+                    👍 - {{ comentario.gostos }}
+                </button>
+                {% if request.user.is_superuser %}
+                <button type="submit" formaction="{% url 'forum:removercomentario' comentario.id %}">
+                    Remover comentario
+                </button>
+                {% endif %}
+
+                <p><label for="subcomentario">Comentar:</label>
+                    <input id="subcomentario" type="text" value="{{ val }}" name="subcomentario">{{ val }}</input>
+                </p>
+
+                <button type="submit" formaction="{% url 'forum:criarsubcomentario' comentario.id %}">
+                    Postar sub comentário
+                </button>
+
+
+                <ul>
+                    {% for subcomentario in comentario.subcomentario_set.all %}
+                    <div class="caixinha_sub">
+                        <li>
+                            {{ subcomentario.subcomentario_texto }}
+                        </li>
+                    </div>
+                    {% endfor %}
+                </ul>
+
+                {% endfor %}
+
+            </li>
+        </ul>
+    </div>
+</form>
+{% endblock %}
+</html>

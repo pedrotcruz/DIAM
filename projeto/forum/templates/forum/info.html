@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "forum/index.html" %}
+{% load static %}
+{% block header %}
+<header>
+    <a href="http://127.0.0.1:8000/forum/">
+        <img src="{% static 'forum/images/header1.jpg' %}" alt="CondutorForum" width="100%" height="auto">
+    </a>
+</header>
+{% endblock %}
+
+{% block sidebar %}
+<aside>
+    <div class="parent">
+        {% if request.user.is_authenticated %}
+        <div class="inline-block-child">
+            <img class="foto_perfil" src="{% static user.condutor.avatar %}" alt="Foto de perfil"/>
+        </div>
+        <div class="inline-block-child">
+            <a href="{% url 'forum:info' %}">
+                <p>{{ request.user.username }}</p>
+            </a>
+            <a href="{% url 'forum:logout' %}">Logout</a>
+            {% else %}
+            <a href="{% url 'forum:fazerLogin' %}">Login</a>
+            <a href="{% url 'forum:signin' %}">Criar conta</a>
+            {% endif %}
+        </div>
+    </div>
+</aside>
+{% endblock %}
+
+<body>
+{% block conteudo %}
+<h1>Informação do utilizador</h1>
+<ul>
+    <p><img class="foto_perfil_info" src="{% static user.condutor.avatar %}" alt="Foto de perfil"/></p>
+    <li><p>Nome: {{ request.user.first_name }} {{ request.user.last_name }}</p></li>
+    <li><p>Username: {{ request.user.username }}</p></li>
+    <li><p>Número de posts: {{ request.user.condutor.numero_posts }}</p></li>
+    <li><p>Email: {{ request.user.email }}</p></li>
+    <li><p>Modelo do carro: {{ request.user.condutor.modelo_carro }}</p></li>
+    <li><a href="{% url 'forum:fazer_upload_avatar' %}"><button type="submit">Alterar foto</button></a></li>
+
+
+</ul>
+<a href="{% url 'forum:index' %}">
+    <button type="submit">Voltar</button>
+</a>
+{% endblock %}
+</body>
+</html>

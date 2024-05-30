@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<form action="{% url 'forum:index' %}" method="post">
+    {% csrf_token %}
+    <p>Post removido</p>
+    <button type="submit" formaction="{% url 'forum:index' %}">Voltar</button>
+</form>
+</body>
+</html>

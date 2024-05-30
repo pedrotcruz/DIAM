@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "forum/index.html" %}
+{% load static %}
+{% block header %}
+<header>
+    <a href="http://127.0.0.1:8000/forum/">
+        <img src="{% static 'forum/images/header1.jpg' %}" alt="CondutorForum" width="100%" height="auto">
+    </a>
+</header>
+{% endblock %}
+
+{% block sidebar %}
+<aside>
+    <div class="parent">
+        {% if request.user.is_authenticated %}
+        <div class="inline-block-child">
+            <img class="foto_perfil" src="{% static user.condutor.avatar %}" alt="Foto de perfil"/>
+        </div>
+        <div class="inline-block-child">
+            <a href="{% url 'forum:info' %}">
+                <p>{{ request.user.username }}</p>
+            </a>
+            <a href="{% url 'forum:logout' %}">Logout</a>
+            {% else %}
+            <a href="{% url 'forum:fazerLogin' %}">Login</a>
+            <a href="{% url 'forum:signin' %}">Criar conta</a>
+            {% endif %}
+        </div>
+    </div>
+</aside>
+{% endblock %}
+
+{% block conteudo %}
+<h1>Crie uma notícia</h1>
+<form method="post">
+    {% csrf_token %}
+    <p><label for="titulo">Título da notícia:</label>
+        <input name="titulo" id="titulo" type="text"></p>
+    <p><label for="texto">Texto da notícia:</label>
+        <input name="texto" id="texto" type="text"></p>
+
+    <button type="submit">Publicar</button>
+    <button type="submit" formaction="{% url 'forum:index_noticia' %}">Voltar</button>
+</form>
+{% endblock %}
+</html>

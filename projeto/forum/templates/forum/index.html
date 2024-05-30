@@ -1,0 +1,63 @@
+{% load static %}
+<link rel="stylesheet" type="text/css"
+      href="{% static 'forum/style.css' %}"/>
+
+<!DOCTYPE html>
+<html lang="pt">
+{% block header %}
+<header>
+    <a href="http://127.0.0.1:8000/forum/">
+        <img src="{% static 'forum/images/header1.jpg' %}" alt="CondutorForum" width="100%" height="auto">
+    </a>
+</header>
+{% endblock %}
+
+{% block sidebar %}
+<aside>
+    <div class="parent">
+        {% if request.user.is_authenticated %}
+        <div class="inline-block-child">
+            <img class="foto_perfil" src="{% static user.condutor.avatar %}" alt="Foto de perfil"/>
+        </div>
+        <div class="inline-block-child">
+            <a href="{% url 'forum:info' %}">
+                <p>{{ request.user.username }}</p>
+            </a>
+            <a href="{% url 'forum:logout' %}">Logout</a>
+            {% else %}
+            <a href="{% url 'forum:fazerLogin' %}">Login</a>
+            <a href="{% url 'forum:signin' %}">Criar conta</a>
+            {% endif %}
+        </div>
+    </div>
+</aside>
+{% endblock %}
+
+{% block conteudo %}
+<div class="top">
+    <a class="titulo"  href="{% url 'forum:index_noticia' %}">Notícias</a>
+</div>
+<div class="top">
+    <a class="titulo" href="{% url 'forum:criarpost' %}">Criar post</a>
+</div>
+
+
+{% if latest_post_list %}
+<ul>
+    {% for post in latest_post_list %}
+    <div class="caixinha">
+        <li>
+            <a class="titulo" href="{% url 'forum:detalhe' post.id %}">
+                {{ post.post_titulo }} - {{ post.gostos }} 👍
+            </a>
+            <p>{{ post.post_texto }}</p>
+        </li>
+    </div>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Nao há posts disponíveis.</p>
+{% endif %}
+{% endblock %}
+
+</html>
